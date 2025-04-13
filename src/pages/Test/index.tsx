@@ -18,6 +18,7 @@ import {
 import NextButton from "./NextButton";
 import Question from "./Question";
 import WordBank from "./WordBank";
+import Loading from "@/components/ui/loading";
 
 export default function Test() {
   const {
@@ -26,13 +27,13 @@ export default function Test() {
     answers,
     setAnswers,
     setTestResult,
-    setLoading,
   } = useTestContext();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [blanks, setBlanks] = useState<(string | null)[]>([]);
   const [startTime] = useState<Date>(new Date());
+  const [loading, setLoadingState] = useState(true);
 
   const navigate = useNavigate();
 
@@ -112,15 +113,24 @@ export default function Test() {
   );
 
   useEffect(() => {
-    setLoading(true);
-
-    setQuestions(testData.questions.data.questions);
-    const blankCount = (
-      testData.questions.data.questions[0]?.question.match(/_{2,}/g) || []
-    ).length;
-    setBlanks(Array(blankCount).fill(null));
-    setLoading(false);
-  }, [setQuestions, setLoading]);
+    setLoadingState(true);
+  
+    // Simulate API call with a Promise
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(testData.questions.data.questions);
+      }, 1000); // 1 second delay to mimic network latency
+    }).then((data: any) => {
+      setQuestions(data);
+  
+      const blankCount = (
+        data[0]?.question.match(/_{2,}/g) || []
+      ).length;
+      setBlanks(Array(blankCount).fill(null));
+  
+      setLoadingState(false);
+    });
+  }, [setQuestions, setLoadingState]);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -138,8 +148,8 @@ export default function Test() {
   };
 
 
-  if (questions.length === 0) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <Loading/>;
   }
 
   const currentQ = questions[currentQuestion];
