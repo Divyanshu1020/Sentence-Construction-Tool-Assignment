@@ -4,12 +4,17 @@ export default function DroppableBlank({
   id,
   word,
   onClick,
+  isActive = true,
 }: {
   id: string;
   word: string | null;
   onClick: () => void;
+  isActive?: boolean;
 }) {
-  const { setNodeRef, isOver } = useDroppable({ id });
+  const { setNodeRef, isOver } = useDroppable({
+    id,
+    disabled: !isActive,
+  });
 
   return (
     <div className="inline-block">

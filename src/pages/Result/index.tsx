@@ -81,6 +81,7 @@ export default function Result() {
                 total={testResult.answers.length}
                 prompt={fillInBlanks(prompt.question, prompt.correctAnswer)}
                 response={fillInBlanks(prompt.question, prompt.userAnswer)}
+                userAnswer={prompt.userAnswer}
                 isCorrect={prompt.isCorrect}
               />
             ))}

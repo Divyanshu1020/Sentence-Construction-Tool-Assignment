@@ -14,6 +14,7 @@ import {
   TouchSensor,
   MouseSensor,
   closestCenter,
+
 } from "@dnd-kit/core";
 import NextButton from "./NextButton";
 import Question from "./Question";
@@ -147,6 +148,12 @@ export default function Test() {
     setBlanks(newBlanks);
   };
 
+  const handleWordClick = (word: string) => {
+    const newBlanks = [...blanks];
+    newBlanks[blanks.indexOf(null)] = word;
+    setBlanks(newBlanks);
+  };
+
 
   if (loading) {
     return <Loading/>;
@@ -191,7 +198,7 @@ export default function Test() {
             <Question questionParts={questionParts} blanks={blanks} onBlankClick={handleBlankClick} />
 
             {/* Word Bank */}
-              <WordBank options={currentQ.options} blanks={blanks} />
+              <WordBank options={currentQ.options} blanks={blanks} handleWordClick={handleWordClick} />
           </DndContext>
         </div>
 

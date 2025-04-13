@@ -19,6 +19,7 @@ export default function Question({
               id={index.toString()}
               word={blanks[index]}
               onClick={() => onBlankClick(index)}
+              isActive={blanks[index] === null}
             />
           )}
         </span>
