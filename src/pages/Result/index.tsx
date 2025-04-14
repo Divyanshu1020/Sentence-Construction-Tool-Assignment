@@ -48,7 +48,7 @@ export default function Result() {
       <main className="flex-1 flex flex-col items-center px-4 py-8  mx-auto w-full">
         {/* Score circle */}
         <div className="mb-8">
-          <ScoreCircle score={93} />
+          <ScoreCircle score={testResult.score} />
         </div>
 
         {/* Feedback text */}
